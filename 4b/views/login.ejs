@@ -1,0 +1,32 @@
+<%- contentFor("css")  %>
+
+<%- contentFor("body")  %>
+<div class="container-fluid d-flex justify-content-center mb-5">
+    <div class="col-lg-6 col-md-9 col-11 mt-5 bg-glasses rounded-3">
+        <div>
+            <h1 class="d-flex justify-content-center color-skyblue">Login</h1>
+        </div>
+        <form action="/login" method="post" class="form-control form bg-transparent border-0">
+
+            <div class="d-flex flex-column color-skyblue gap-1 mb-4">
+                <label for="email" id="label-email">email</label>
+                <input type="email" name="email" id="email" class="" required>
+            </div>
+            <div class="d-flex flex-column color-skyblue gap-1 mb-4">
+                <label for="password" id="label-password">password</label>
+                <input type="password" name="password" id="password" class="" required>
+            </div>
+
+            <div>
+                <a href="/register">
+                    not have account yet , register here !!!
+                </a>
+            </div>
+            <div class="d-flex flex-column align-items-end gap-1 mb-4">
+                <button type="submit" class="btn btn-outline-primary w-25">submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- contentFor("js")  %>

@@ -16,17 +16,37 @@ body {
 }
 
 .bg-glasses {
-    background: rgba(255, 255, 255, 0.05) !important;
-    -webkit-backdrop-filter: blur(5px) !important;
-    backdrop-filter: blur(5px) !important;
-    // border: 1px solid rgba(255, 255, 255, 0.025) !important;
+    background: rgba(0, 0, 0, 0.505) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    backdrop-filter: blur(20px) !important;
 }
 
 nav {
+    box-sizing: border-box !important;
     border-bottom: .5px solid #00B2D9;
     box-shadow: 1px 1px 4px rgba(255, 255, 255, 0.364);
 }
 
 #dropdown-nav {
-    left: -130px;
+    left: -150px;
+}
+
+.active-page {
+    color: white !important
+}
+
+
+.navbar-toggler {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    span {
+        margin: 5px 5px;
+        display: flex;
+        width: 40px;
+        height: 0px;
+        border-bottom: 1px solid #00B2D9;
+    }
 }
