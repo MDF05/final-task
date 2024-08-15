@@ -4,28 +4,44 @@
 <div class="container-fluid d-flex justify-content-center mb-5">
     <div class="col-lg-6 col-md-9 col-11 mt-5 bg-glasses rounded-3">
         <div>
-            <h1 class="d-flex justify-content-center color-skyblue">Add Provinsi</h1>
+            <h1 class="d-flex justify-content-center color-skyblue">
+                <%= update ? "update provinsi" : "Add Provinsi"  %>
+            </h1>
         </div>
-        <form action="/provinsi" method="post" enctype="multipart/form-data"
-            class="form-control form bg-transparent border-0">
+        <form action="/provinsi<%= update ? "/" + update.id  + "?_method=PUT" : '' %>" method="post"
+            enctype="multipart/form-data" class="form-control form bg-transparent border-0">
             <div class="d-flex flex-column color-skyblue gap-1 mb-4">
                 <label for="nama" id="label-nama">nama</label>
-                <input type="text" name="nama" id="nama" class="" required>
+                <input type="text" name="nama" id="nama" class="" required value="<%= update ? update.nama : ""  %>">
             </div>
             <div class="d-flex flex-column color-skyblue gap-1 mb-4">
                 <label for="diresmikan" id="label-diresmikan">diresmikan</label>
-                <input type="date" name="diresmikan" id="diresmikan" class="" required>
+                <input type="date" name="diresmikan" id="diresmikan" class="" required
+                    value="<%= update ? update.diresmikan : ""  %>">
             </div>
             <div class="d-flex flex-column color-skyblue gap-1 mb-4">
                 <label for="pulau" id="label-pulau">pulau</label>
-                <input type="text" name="pulau" id="pulau" class="bg-white" required>
+                <select name="pulau" class="pulau-filter px-2 bg-transparent color-skyblue border-skyblue" required>
+                    <option class="bg-transparent"></option>
+                    <option value="jawa" <%= update.pulau == "jawa" ? "selected" : "" %>> jawa</option>
+                    <option value="sumatera" <%= update.pulau == "sumatera" ? "selected" : "" %>> sumatera</option>
+                    <option value="sulawesi" <%= update.pulau == "sulawesi" ? "selected" : "" %>> sulawesi</option>
+                    <option value="kalimantan" <%= update.pulau == "kalimantan" ? "selected" : "" %>> kalimantan
+                    </option>
+                    <option value="papua" <%= update.pulau == "papua" ? "selected" : "" %>> papua</option>
+                    <option value="bali" <%= update.pulau == "bali" ? "selected" : "" %>> bali</option>
+                </select>
             </div>
             <div class="d-flex flex-column color-skyblue gap-1 mb-4">
                 <label for="photo" id="label-photo">photo</label>
-                <input type="file" name="photo" id="photo" class="bg-white" required>
+                <input type="file" name="photo" id="photo" class="bg-white imageProject" required>
+                <img src="<%= update ? update.photo : "" %>" alt="preview-image" style="height: 150px; width: 150px;"
+                    class="preview-image">
             </div>
             <div class="d-flex flex-column align-items-end gap-1 mb-4">
-                <button type="submit" class="btn btn-outline-primary w-25">add</button>
+                <button type="submit" class="btn btn-outline-<%= update ? "warning" : "primary"  %> w-25">
+                    <%= update ? "update" : "add" %>
+                </button>
             </div>
         </form>
     </div>

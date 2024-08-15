@@ -10,29 +10,29 @@
 
     <link rel="stylesheet" href="../../node_modules//bootstrap/dist/css/bootstrap.css">
     <%- css %>
-    <link rel="stylesheet" href="assets/css/template.css">
+    <link rel="stylesheet" href="/assets/css/template.css">
 </head>
 
 <body class="bg-black">
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header bg-black">
-            <a class="dropdown-item color-skyblue d-flex gap-2" href="#">
-                <span>
-                    username
-                </span>
-                <img src="/<%= user.imageUrl ? user?.imageUrl: 'assets//images/default-avatar.png'  %>" alt="user-image"
-                    class="rounded-circle bg-skyblue border border-2 border-skyblue" style="width: 40px; height: 40px;">
-            </a>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+            <button type="button" class="btn-close bg-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body bg-black">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li class="nav-item">
                     <ul class="bg-glasses list-group list-unstyled" id="dropdown-nav">
-                        <li>
-
-                        </li>
-                        <li>
+                        <li class="border-bottom mb-1 pb-2">
+                            <a class="dropdown-item color-skyblue d-flex gap-2 justify-content-between" href="#">
+                                <span>
+                                    <%= user ? user.username : "username" %> <br>
+                                    <%= user ? user.email : "" %>
+                                </span>
+                                <img src="/<%= user.imageUrl ? user?.imageUrl: 'assets//images/default-avatar.png'  %>"
+                                    alt="user-image" class="rounded-circle bg-skyblue border border-2 border-skyblue"
+                                    style="width: 40px; height: 40px;">
+                            </a>
                             <hr class="dropdown-divider border-skyblue">
                         </li>
                         <li>
@@ -59,13 +59,16 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <li class="nav-item border-bottom mb-1 pb-1">
+
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                <li class="nav-item m-0 d-flex flex-column gap-0">
+                    <a class="nav-link color-skyblue m-0 p-0  <%= active == 'provinsi' ? 'active-page' : '' %>"
+                        aria-current="page" href="/?view=provinsi">Provinsi</a>
+                    <a class="nav-link color-skyblue  m-0 p-0 <%= active == 'kabupaten' ? 'active-page' : '' %>"
+                        aria-current="page" href="/?view=kabupaten">Kabupaten</a>
                 </li>
-            </ul>
+
         </div>
     </div>
 
@@ -143,7 +146,8 @@
 
     <% if(messages.succes) { %>
     <% messages.succes.forEach(msg => { %>
-    <div class="alert alert-success alert-dismissible fade show position-fixed top-0 w-100" role="alert">
+    <div class="alert alert-success alert-dismissible fade show position-fixed top-0 w-100" role="alert"
+        style="z-index: 100;">
         <%= msg  %>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -152,7 +156,8 @@
 
     <% if(messages.danger) { %>
     <% messages.danger.forEach(msg => { %>
-    <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 w-100" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 w-100" role="alert"
+        style="z-index: 100;">
         <%= msg  %>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -172,6 +177,33 @@
                 alert.classList.add("d-none")
             })
         }, 4000)
+
+        const updateInput = document.querySelector(".imageProject")
+        const previewImage = document.querySelector(".preview-image")
+        fileInput(previewImage.src)
+
+        updateInput.addEventListener("change", (event) => {
+            const newImage = URL.createObjectURL(updateInput.files[0])
+            previewImage.src = newImage
+
+        })
+
+        function fileInput(srcImg) {
+            fetch(srcImg).then(response => response.blob()).then(response => {
+                let sourceImage = srcImg.split("/")
+                sourceImage = sourceImage[sourceImage.length - 1]
+
+                sourceImage = sourceImage.replaceAll("%20", " ")
+
+                let file = new File([response], sourceImage, {
+                    type: "image/jpeg",
+                    lastModified: new Date().getTime()
+                }, 'utf-8');
+                let container = new DataTransfer();
+                container.items.add(file);
+                updateInput.files = container.files;
+            })
+        }
     </script>
 
 </body>

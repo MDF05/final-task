@@ -4,35 +4,43 @@
 <div class="container-fluid d-flex justify-content-center mb-5">
     <div class="col-lg-6 col-md-9 col-11 mt-5 bg-glasses rounded-3">
         <div>
-            <h1 class="d-flex justify-content-center color-skyblue">Kabupaten</h1>
+            <h1 class="d-flex justify-content-center color-skyblue">
+                <%= update ? "update kabupaten" : "add kabupaten"  %></h1>
         </div>
-        <form action="/register" method="post" enctype="multipart/form-data"
-            class="form-control form bg-transparent border-0">
+
+        <form action="/kabupaten<%= update ? "/" + update.id + "?_method=PUT" : ''  %>" method="post"
+            enctype="multipart/form-data" class="form-control form bg-transparent border-0">
             <div class="d-flex flex-column color-skyblue gap-1 mb-4">
-                <label for="name" id="label-name">name</label>
-                <input type="text" name="name" id="name" class="" required>
+                <label for="nama" id="label-nama">nama</label>
+                <input type="text" name="nama" id="nama" class="" value="<%= update ? update.nama : ''  %>" required>
             </div>
             <div class="d-flex flex-column color-skyblue gap-1 mb-4">
                 <label for="provinsi" id="provinsi_id">asal provinsi</label>
-                <select name="provinsi_id" id="">
+                <select name="provinsi_id" id="" required>
                     <option></option>
-                    <option value="aceh">aceh</option>
-                    <option value="meda">medan</option>
+                    <% provinsi.forEach((prov, index) => { %>
+                    <option value="<%= prov.id  %>" <%= prov.id == update.provinsi_id ? "selected" : '' %>>
+                        <%= prov.nama  %></option>
+                    <% }) %>
                 </select>
 
             </div>
             <div class="d-flex flex-column color-skyblue gap-1 mb-4">
                 <label for="diresmikan" id="label-diresmikan">diresmikan</label>
-                <input type="text" name="diresmikan" id="diresmikan" class="" required>
+                <input type="date" name="diresmikan" id="diresmikan" class="" required
+                    value="<%= update ? update.diresmikan : ''  %>">
             </div>
-            <div class="d-flex flex-column color-skyblue gap-1 mb-4">
+            <div class=" d-flex flex-column color-skyblue gap-1 mb-4">
                 <label for="photo" id="label-photo">photo</label>
-                <input type="file" name="photo" id="photo" class="bg-white" required>
+                <input type="file" name="photo" id="photo" class="bg-white imageProject" required>
+                <img src="<%= update ? update.photo : "" %>" alt="preview-image" style="height: 150px; width: 150px;"
+                    class="preview-image">
             </div>
             <div>
             </div>
             <div class="d-flex flex-column align-items-end gap-1 mb-4">
-                <button type="submit" class="btn btn-outline-primary w-25">submit</button>
+                <button type="submit"
+                    class="btn w-25 btn-outline-<%= update ? "warning" : "primary"  %>"><%= update ? "update" : "add" %></button>
             </div>
         </form>
     </div>

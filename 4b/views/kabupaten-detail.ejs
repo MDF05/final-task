@@ -1,0 +1,56 @@
+<%- contentFor("css")  %>
+
+<%- contentFor("body")  %>
+<div class="container-fluid mt-t pt-5">
+    <div class="row justify-content-center">
+        <img src="/<%= kabupaten.photo %>" alt="image-kabupaten" class="col-12 my-4"
+            style="width: 250px;  height: 250px;">
+        <h1 class="color-skyblue text-center"><%= kabupaten.nama  %></h1>
+        <ul class="mt-5 list-group col-12 col-md-10 col-lg-6">
+            <li class="list-group-item">tahun di resmikan : <%= kabupaten.diresmikan  %></li>
+            <li class="list-group-item">berada di pulau : <%= kabupaten.pulau  %></li>
+            <% 
+                const agePost = calculateAgePost(kabupaten.createdAt)
+                const datePost = datePostConvert(kabupaten.createdAt)
+             %>
+            <li class="list-group-item"> diposting : <%= datePost %></li>
+            <li class="list-group-item">usia postingan : <%= agePost  %></li>
+        </ul>
+    </div>
+</div>
+<div class="row mt-5">
+    <h1 class="d-flex color-skyblue justify-content-center"> Kabupaten <%= kabupaten.nama  %> berada di provinsi </h1>
+</div>
+<div class="row justify-content-center">
+    <div class="card col-11 col-sm-6 col-lg-3 bg-transparent px-5 mt-5">
+        <div
+            class="header d-flex flex-column align-items-center justify-content-center row border border-2 border-skyblue mb-4">
+            <img src="/<%= provinsi.photo %>" alt="image-provinsi" class="col-12 my-4" style="height: 150px;">
+            <div class="d-flex flex-column justify-content-center" style="height: 100px;">
+                <h5 class="color-skyblue text-capitalize"><%= provinsi.nama %></h3>
+                    <p class="text-secondary text-end"><%= provinsi.diresmikan  %></p>
+            </div>
+            <div class="footer mb-2">
+                <% const postAt = datePostConvert(provinsi.createdAt) %>
+                <% const agePostProv = calculateAgePost(provinsi.createdAt) %>
+                <div>post : <%= postAt %></div>
+                <div class="d-flex justify-content-end">
+                    <%= agePostProv %>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center gap-3 p-0">
+            <form action="/provinsi/detail/<%= provinsi.id  %>" method="get" class="col-3 p-0">
+                <button class="btn bg-skyblue">detail</button>
+            </form>
+            <form action="/provinsi/<%= provinsi.id %>?_method=DELETE" method="post" class="col-3 p-0 ">
+                <button class="btn bg-danger"
+                    onclick="return confirm('apakah kamu yakin menghapus provinsi ini')">hapus</button>
+            </form>
+            <a href="/provinsi?update=<%= provinsi.id %>" class="col-3 p-0 ">
+                <button class="btn btn-warning">update</button>
+            </a>
+        </div>
+    </div>
+</div>
+<%- contentFor("js")  %>

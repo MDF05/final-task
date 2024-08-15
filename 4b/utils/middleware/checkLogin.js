@@ -6,4 +6,9 @@ function validateLogin(req, res, next) {
     }
 }
 
-module.exports = { validateLogin }
+function deleteSession(req, res, next) {
+    req.session.destroy()
+    res.redirect("/")
+}
+
+module.exports = { validateLogin, deleteSession }
