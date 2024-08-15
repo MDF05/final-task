@@ -1,10 +1,10 @@
 const { where } = require("sequelize")
-const { Provinsi } = require("../models")
-const { Kabupaten } = require("../models")
-const { User } = require("../models")
+const Provinsi = require("../models/provinsi.js")
+const Kabupaten = require("../models/kabupaten.js")
 const { saveImage, deleteImage } = require("../utils/image/save")
 const datePostConvert = require("../utils/time/datePostConvert.js")
 const calculateAgePost = require("../utils/time/agePost.js")
+const { all } = require("../routers/home-router.js")
 
 async function renderProvinsi(req, res, next) {
     try {
@@ -67,7 +67,7 @@ async function deleteProvinsi(req, res, next) {
                 user_id: `${user.id}`,
                 id,
             },
-        })
+        },)
 
         deleteImage(provinsi.photo)
 
@@ -97,9 +97,11 @@ async function detailProvinsi(req, res, next) {
                 user_id: `${user.id}`,
             },
         })
+        
 
         const kabupaten = await Kabupaten.findAll({
             where: {
+                user_id : user.id,
                 provinsi_id: provinsi.id,
             },
         })

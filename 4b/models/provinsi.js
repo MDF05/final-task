@@ -1,28 +1,54 @@
-"use strict"
-const { Model } = require("sequelize")
-module.exports = (sequelize, DataTypes) => {
-    class Provinsi extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
-        static associate(models) {
-            // define association here
-        }
-    }
-    Provinsi.init(
-        {
-            user_id: DataTypes.INTEGER,
-            nama: DataTypes.STRING,
-            diresmikan: DataTypes.STRING,
-            photo: DataTypes.STRING,
-            pulau: DataTypes.STRING,
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = require('../db/db')
+
+const Provinsi = sequelize.define(
+  'Provinsi',
+  {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue : DataTypes.UUIDV4
+    },
+    nama: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    diresmikan: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    photo: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    pulau: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    user_id: {
+      allowNull: false,
+      type: DataTypes.UUID,
+      references: {
+        model: {
+          tableName: "Users",
         },
-        {
-            sequelize,
-            modelName: "Provinsi",
-        },
-    )
-    return Provinsi
-}
+        key: "id",
+      },
+    },
+  },
+);
+
+
+
+module.exports = Provinsi
+

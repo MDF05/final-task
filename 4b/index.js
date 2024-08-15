@@ -5,7 +5,11 @@ const flash = require("express-flash")
 const cookieParser = require("cookie-parser")
 const session = require("express-session")
 const multer = require("multer")
-var methodOverride = require("method-override")
+const methodOverride = require("method-override")
+
+const User = require("./models/user")
+const Provinsi = require("./models/provinsi")
+const Kabupaten = require("./models/kabupaten")
 
 const sequelize = require("./db/db")
 
@@ -50,6 +54,8 @@ app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "views"))
 app.use("/assets", express.static(path.join(__dirname, "/assets")))
 
+
+
 app.use("/", homeRouter)
 app.use("/register", upload.single("image"), registerRouter)
 app.use("/login", loginRouter)
@@ -65,7 +71,7 @@ app.use("/", (req, res, next) => {
 
 app.listen(port, async () => {
     try {
-        await sequelize.authenticate()
+        await sequelize.sync()
         console.log(`\n your app running in http://localhost:${port}`)
         console.log(`connected database`)
     } catch (err) {

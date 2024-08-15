@@ -1,7 +1,6 @@
 const express = require("express")
-const { Kabupaten } = require("../models")
-const { Provinsi } = require("../models")
-const { where } = require("sequelize")
+const  Kabupaten  = require("../models/kabupaten.js")
+const  Provinsi  = require("../models/provinsi.js")
 const datePostConvert = require("../utils/time/datePostConvert.js")
 const calculateAgePost = require("../utils/time/agePost.js")
 
@@ -25,7 +24,9 @@ async function renderHome(req, res, next) {
     })
 
     if (view == "kabupaten") {
-        const kabCondition = {}
+        const kabCondition = {
+            user_id : user.id
+        }
         if (filter) kabCondition.provinsi_id = filter
         const kabupaten = await Kabupaten.findAll({ where: kabCondition })
         return res.render("kabupaten.ejs", {
@@ -49,8 +50,6 @@ async function renderHome(req, res, next) {
             calculateAgePost,
         })
     }
-}
-{
 }
 
 module.exports = { renderHome }

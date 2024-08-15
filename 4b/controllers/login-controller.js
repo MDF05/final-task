@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt")
-const { User } = require("../models")
-const { where } = require("sequelize")
+const  User  = require("../models/user")
 
 async function renderLogin(req, res, next) {
     try {

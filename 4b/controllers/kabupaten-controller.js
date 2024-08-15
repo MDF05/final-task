@@ -1,6 +1,6 @@
 const { where } = require("sequelize")
-const { Provinsi } = require("../models")
-const { Kabupaten } = require("../models")
+const Kabupaten = require("../models/kabupaten.js")
+const Provinsi  = require("../models/provinsi.js")
 const { saveImage, deleteImage } = require("../utils/image/save")
 const datePostConvert = require("../utils/time/datePostConvert.js")
 const calculateAgePost = require("../utils/time/agePost.js")
@@ -21,6 +21,7 @@ async function renderKabupaten(req, res, next) {
             update = await Kabupaten.findOne({
                 where: {
                     id: update,
+                    user_id : user.id
                 },
             })
         }
@@ -47,8 +48,8 @@ async function kabupaten(req, res, next) {
         const provinsi = new Kabupaten({
             nama,
             diresmikan,
-            user_id: user.id,
             pulau,
+            user_id: user.id,
             provinsi_id,
             photo: pathImage,
         })
@@ -71,16 +72,16 @@ async function deleteKabupaten(req, res, next) {
 
         const provinsi = await Kabupaten.findOne({
             where: {
-                // user_id: `${user.id}`,
+                user_id: `${user.id}`,
                 id,
             },
         })
 
-        // deleteImage(provinsi.photo)
+        deleteImage(provinsi.photo)
 
         await Kabupaten.destroy({
             where: {
-                // user_id: `${user.id}`,
+                user_id: `${user.id}`,
                 id,
             },
         })
