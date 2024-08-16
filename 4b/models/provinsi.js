@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            Provinsi.hasMany(models.Kabupaten, {foreignKey : "provinsiID"})
         }
     }
     Provinsi.init(
@@ -17,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
             diresmikan: DataTypes.STRING,
             photo: DataTypes.STRING,
             pulau: DataTypes.STRING,
-            userId: DataTypes.UUID,
+            user_id: DataTypes.INTEGER,
         },
         {
             sequelize,

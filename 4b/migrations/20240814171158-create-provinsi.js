@@ -6,8 +6,8 @@ module.exports = {
             id: {
                 allowNull: false,
                 primaryKey: true,
-                type: Sequelize.UUID,
-                defaultValue : Sequelize.UUIDV4
+                autoIncrement : true,
+                type: Sequelize.INTEGER,
             },
             nama: {
                 allowNull: false,
@@ -33,11 +33,11 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.DATE,
             },
-            userId: {
+            user_id: {
                 allowNull: false,
-                type: Sequelize.UUID,
+                type: Sequelize.INTEGER,
                 references: {
-                    model:  "Users",
+                    model:  "users",
                     key: "id",
                 },
             },
