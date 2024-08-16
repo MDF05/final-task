@@ -1,6 +1,6 @@
 const { where } = require("sequelize")
 const Kabupaten = require("../models/kabupaten.js")
-const Provinsi  = require("../models/provinsi.js")
+const Provinsi = require("../models/provinsi.js")
 const { saveImage, deleteImage } = require("../utils/image/save")
 const datePostConvert = require("../utils/time/datePostConvert.js")
 const calculateAgePost = require("../utils/time/agePost.js")
@@ -21,7 +21,7 @@ async function renderKabupaten(req, res, next) {
             update = await Kabupaten.findOne({
                 where: {
                     id: update,
-                    user_id : user.id
+                    user_id: user.id,
                 },
             })
         }
@@ -128,14 +128,14 @@ async function detailKabupaten(req, res, next) {
 
 async function updateKabupaten(req, res, next) {
     try {
-        const { nama, diresmikan, pulau } = req.body
+        const { nama, diresmikan, pulau, provinsi_id } = req.body
         const id = req.params.id
         const user = req.session.user
         const pathImage = `assets/uploads/${new Date().getTime()} - ${req.file.originalname}`
 
         const provinsi = await Kabupaten.findOne({
             where: {
-                // user_id: `${user.id}`,
+                user_id: `${user.id}`,
                 id,
             },
         })
@@ -149,10 +149,11 @@ async function updateKabupaten(req, res, next) {
                 diresmikan,
                 pulau,
                 photo: pathImage,
+                provinsi_id,
             },
             {
                 where: {
-                    // user_id: user.id,
+                    user_id: user.id,
                     id,
                 },
             },
