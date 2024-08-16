@@ -5,9 +5,9 @@ module.exports = {
         await queryInterface.createTable("Kabupatens", {
             id: {
                 allowNull: false,
-                autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER,
+                type: Sequelize.UUID,
+                defaultValue : Sequelize.UUIDV4
             },
             nama: {
                 allowNull: false,
@@ -21,6 +21,22 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING,
             },
+            provinsiID: {
+                allowNull: false,
+                type: Sequelize.UUID,
+                references: {
+                    model:  "Provinsis",
+                    key: "id",
+                },
+            },
+            userId: {
+                allowNull: false,
+                type: Sequelize.UUID,
+                references: {
+                    model:  "Users",
+                    key: "id",
+                },
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
@@ -28,16 +44,6 @@ module.exports = {
             updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
-            },
-            provinsi_id: {
-                allowNull: false,
-                type: Sequelize.INTEGER,
-                references: {
-                    model: {
-                        tableName: "Provinsis",
-                    },
-                    key: "id",
-                },
             },
         })
     },

@@ -8,16 +8,16 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            // define association here
+            Provinsi.hasMany(models.Kabupaten, {foreignKey : "provinsiID"})
         }
     }
     Provinsi.init(
         {
-            user_id: DataTypes.INTEGER,
             nama: DataTypes.STRING,
             diresmikan: DataTypes.STRING,
             photo: DataTypes.STRING,
             pulau: DataTypes.STRING,
+            userId: DataTypes.UUID,
         },
         {
             sequelize,

@@ -5,9 +5,9 @@ module.exports = {
         await queryInterface.createTable("Provinsis", {
             id: {
                 allowNull: false,
-                autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER,
+                type: Sequelize.UUID,
+                defaultValue : Sequelize.UUIDV4
             },
             nama: {
                 allowNull: false,
@@ -33,13 +33,11 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.DATE,
             },
-            user_id: {
+            userId: {
                 allowNull: false,
-                type: Sequelize.INTEGER,
+                type: Sequelize.UUID,
                 references: {
-                    model: {
-                        tableName: "Users",
-                    },
+                    model:  "Users",
                     key: "id",
                 },
             },

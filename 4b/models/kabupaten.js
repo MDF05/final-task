@@ -13,10 +13,10 @@ module.exports = (sequelize, DataTypes) => {
     }
     Kabupaten.init(
         {
-            provinsi_id: DataTypes.INTEGER,
             nama: DataTypes.STRING,
             diresmikan: DataTypes.STRING,
             photo: DataTypes.STRING,
+            provinsiID : DataTypes.UUID
         },
         {
             sequelize,
