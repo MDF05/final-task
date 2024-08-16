@@ -25,7 +25,9 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: {
-                    model:  "provinsis",
+                    model: {
+                        tableName :  "provinsis"
+                    },
                     key: "id",
                 },
             },
@@ -33,7 +35,9 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: {
-                    model:  "Users",
+                    model: {
+                        tableName : "users"
+                    },
                     key: "id",
                 },
             },
