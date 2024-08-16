@@ -67,7 +67,7 @@ async function deleteProvinsi(req, res, next) {
                 user_id: `${user.id}`,
                 id,
             },
-        },)
+        })
 
         deleteImage(provinsi.photo)
 
@@ -97,11 +97,10 @@ async function detailProvinsi(req, res, next) {
                 user_id: `${user.id}`,
             },
         })
-        
 
         const kabupaten = await Kabupaten.findAll({
             where: {
-                user_id : user.id,
+                user_id: user.id,
                 provinsi_id: provinsi.id,
             },
         })
@@ -123,7 +122,7 @@ async function detailProvinsi(req, res, next) {
 
 async function updateProvinsi(req, res, next) {
     try {
-        const { nama, diresmikan, pulau } = req.body
+        const { nama, diresmikan, pulau, provinsi_id } = req.body
         const id = req.params.id
         const user = req.session.user
         const pathImage = `assets/uploads/${new Date().getTime()} - ${req.file.originalname}`
@@ -144,6 +143,7 @@ async function updateProvinsi(req, res, next) {
                 diresmikan,
                 pulau,
                 photo: pathImage,
+                provinsi_id,
             },
             {
                 where: {

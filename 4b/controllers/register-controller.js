@@ -1,9 +1,7 @@
 const bcrypt = require("bcrypt")
-const User  = require("../models/user")
+const User = require("../models/user")
 // const Provinsi = require("../models/provinsi")
 const { saveImage } = require("../utils/image/save")
-// User.hasMany(Provinsi, { foreignKey: 'userId' });
-// Provinsi.belongsTo(User, { foreignKey: 'userId' });
 
 async function renderRegister(req, res, next) {
     try {
@@ -26,15 +24,12 @@ async function register(req, res, next) {
         const saltRounds = 10
         const hashPassword = await bcrypt.hash(password, saltRounds)
 
-        await User.create(
-            {
-                username,
-                password: hashPassword,
-                email,
-                imageUrl: pathImage,
-            },
-           
-          );
+        await User.create({
+            username,
+            password: hashPassword,
+            email,
+            imageUrl: pathImage,
+        })
 
         saveImage(req.file.buffer, pathImage)
 
