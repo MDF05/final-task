@@ -1,12 +1,11 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../db/db')
+const sequelize = require("../db/db")
 
 const Provinsi = sequelize.define(
   'Provinsi',
   {
     id: {
       allowNull: false,
-      autoIncrement: true,
       primaryKey: true,
       type: DataTypes.UUID,
       defaultValue : DataTypes.UUIDV4
@@ -46,7 +45,11 @@ const Provinsi = sequelize.define(
       },
     },
   },
+  {
+    tableName : 'Provinsis'
+  }
 );
+
 
 
 

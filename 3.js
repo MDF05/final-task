@@ -26,4 +26,4 @@ function draw(num) {
 }
 
 
-draw(11)
+draw(7)

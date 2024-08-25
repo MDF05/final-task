@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt")
 const  User  = require("../models/user")
+const Provinsi = require("../models/provinsi")
 
 async function renderLogin(req, res, next) {
     try {
@@ -23,8 +24,11 @@ async function login(req, res, next) {
             where: {
                 email,
             },
+            include : {
+                model : Provinsi
+            }
         })
-        console.log(user)
+        
         if (!user) {
             req.flash("danger", "account not found or you not register")
             return res.redirect("/login")

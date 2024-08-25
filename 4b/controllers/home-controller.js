@@ -1,55 +1,59 @@
-const express = require("express")
-const  Kabupaten  = require("../models/kabupaten.js")
-const  Provinsi  = require("../models/provinsi.js")
-const datePostConvert = require("../utils/time/datePostConvert.js")
-const calculateAgePost = require("../utils/time/agePost.js")
+const express = require("express");
+const Kabupaten = require("../models/kabupaten.js");
+const Provinsi = require("../models/provinsi.js");
+const User = require("../models/user.js");
+const datePostConvert = require("../utils/time/datePostConvert.js");
+const calculateAgePost = require("../utils/time/agePost.js");
 
 async function renderHome(req, res, next) {
-    const view = req.query.view
-    const filter = req.query.filter
-    const user = req.session.user
+  const view = req.query.view;
+  const userSession = req.session.user;
+  const filter = req.query.filter;
+  const regexFilter = /[0-9]/.test(filter);
 
-    let whereCondition = {
-        user_id: `${user.id}`,
-    }
+  const user = await User.findOne({
+    where: {
+      id: userSession.id,
+    },
+  });
 
-    const testregex = /[0-9]/.test(filter)
+  let whereCondition = {
+    user_id: userSession.id,
+  };
 
-    if (filter && !testregex) {
-        whereCondition.pulau = filter
-    }
+  if (filter && !regexFilter) {
+    whereCondition.pulau = filter;
+  }
 
-    const provinsi = await Provinsi.findAll({
-        where: whereCondition,
-    })
+  const provinsi = await Provinsi.findAll({
+    where: whereCondition,
+  });
 
-    if (view == "kabupaten") {
-        const kabCondition = {
-            user_id : user.id
-        }
-        if (filter) kabCondition.provinsi_id = filter
-        const kabupaten = await Kabupaten.findAll({ where: kabCondition })
-        return res.render("kabupaten.ejs", {
-            layout: "template/template.ejs",
-            active: "kabupaten",
-            user,
-            kabupaten,
-            provinsi,
-            filter,
-            datePostConvert,
-            calculateAgePost,
-        })
-    } else {
-        return res.render("provinsi.ejs", {
-            layout: "template/template.ejs",
-            active: "provinsi",
-            user,
-            provinsi,
-            filter,
-            datePostConvert,
-            calculateAgePost,
-        })
-    }
+  const renderOption = {
+    layout: "template/template.ejs",
+    user,
+    provinsi,
+    filter,
+    datePostConvert,
+    calculateAgePost,
+  };
+
+  if (view == "kabupaten") {
+    const kabKondition = {
+      user_id: userSession.id,
+    };
+
+    if (filter) kabKondition.provinsi_id = filter;
+
+    const kabupaten = await Kabupaten.findAll({ where: kabKondition });
+    renderOption.kabupaten = kabupaten;
+    renderOption.active = "kabupaten";
+
+    return res.render("kabupaten.ejs", renderOption);
+  } else {
+    renderOption.active = "provinsi";
+    return res.render("provinsi.ejs", renderOption);
+  }
 }
 
-module.exports = { renderHome }
+module.exports = { renderHome };
